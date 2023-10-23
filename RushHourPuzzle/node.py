@@ -34,48 +34,40 @@ class Node:
                     return self.heuristic1()+len(unique_vehicles)-2
                 return self.heuristic1()+len(unique_vehicles)-1
     
+    
+    def heuristic3(self):
+        h1 = self.heuristic1()
+        h2 = self.heuristic2()
+        # # Sum both heuristics
+        return h1 +  h2 
+
+
+
+
+
+
     # def heuristic3(self):
-    #     goal_car = None
+    #     blocking_vehicles = set()  # Initialize a set to store blocking vehicles
+
     #     for vehicle in self.state.vehicles:
     #         if vehicle["id"] == 'X':
-    #             goal_car = vehicle
-    #             break
-        
-    #     def count_blocking_cars(x, y):
-    #         if x == goal_car["x"] + goal_car["length"]:
-    #             return 0
-    #         count = 0
-    #         for v in self.state.vehicles:
-    #             if v["id"] != 'X' and v["orientation"] == 'H':
-    #                 if v["y"] == y and v["x"] > x and v["x"] < goal_car["x"] + goal_car["length"]:
-    #                     count += 1
-    #         return count
-        
-    #     return count_blocking_cars(goal_car["x"], goal_car["y"])
+    #             for other_vehicle in self.state.vehicles:
+    #                 if vehicle["id"] != other_vehicle["id"] and vehicle["x"] == other_vehicle["x"]:
+    #                     if vehicle["y"] < other_vehicle["y"]:
+    #                         blocking_vehicles.add(other_vehicle["id"])
+    #                     else:
+    #                         blocking_vehicles.add(other_vehicle["id"])
 
+    #     for vehicle in self.state.vehicles:
+    #         if vehicle["id"] == 'X':
+    #             for other_vehicle in self.state.vehicles:
+    #                 if vehicle["id"] != other_vehicle["id"] and vehicle["y"] == other_vehicle["y"]:
+    #                     if vehicle["x"] < other_vehicle["x"]:
+    #                         blocking_vehicles.add(other_vehicle["id"])
+    #                     else:
+    #                         blocking_vehicles.add(other_vehicle["id"])
 
-    def heuristic3(self):
-        blocking_vehicles = set()  # Initialize a set to store blocking vehicles
-
-        for vehicle in self.state.vehicles:
-            if vehicle["id"] == 'X':
-                for other_vehicle in self.state.vehicles:
-                    if vehicle["id"] != other_vehicle["id"] and vehicle["x"] == other_vehicle["x"]:
-                        if vehicle["y"] < other_vehicle["y"]:
-                            blocking_vehicles.add(other_vehicle["id"])
-                        else:
-                            blocking_vehicles.add(other_vehicle["id"])
-
-        for vehicle in self.state.vehicles:
-            if vehicle["id"] == 'X':
-                for other_vehicle in self.state.vehicles:
-                    if vehicle["id"] != other_vehicle["id"] and vehicle["y"] == other_vehicle["y"]:
-                        if vehicle["x"] < other_vehicle["x"]:
-                            blocking_vehicles.add(other_vehicle["id"])
-                        else:
-                            blocking_vehicles.add(other_vehicle["id"])
-
-        return len(blocking_vehicles)+self.heuristic1()  # Return the count of distinct blocking vehicles
+    #     return len(blocking_vehicles)+self.heuristic1()  # Return the count of distinct blocking vehicles
 
 
 

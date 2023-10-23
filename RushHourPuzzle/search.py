@@ -73,7 +73,7 @@ class Search:
         initial_node = Node(initial_state)
         initial_node.setF(h)
         
-        
+         
         if initial_node.state.isGoal():
             return initial_node, 0
         
