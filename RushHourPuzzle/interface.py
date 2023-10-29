@@ -28,18 +28,18 @@ with open("1.csv", "r") as file:
 # Create a list of colors for each vehicle
 vehicle_colors = [
     (255, 0, 0),  # Red
-    (0, 255, 0),  # Green
+    # (0, 255, 0),  # Green
     (0, 0, 255),  # Blue
-    (255, 255, 0),  # Yellow
-    (255, 0, 255),  # Magenta
+    # (255, 255, 0),  # Yellow
+    # (255, 0, 255),  # Magenta
     (0, 255, 255),  # Cyan
-    (128, 128, 0),  # Olive
-    (128, 0, 128),  # Purple
-    (0, 128, 128),  # Teal
-    (128, 128, 128),  # Gray
-    (255, 128, 0),  # Orange
-    (128, 0, 0),  # Maroon
-    (0, 128, 0),  # Green
+    # (128, 128, 0),  # Olive
+    # (128, 0, 128),  # Purple
+    # (0, 128, 128),  # Teal
+    # (128, 128, 128),  # Gray
+    # (255, 128, 0),  # Orange
+    # (128, 0, 0),  # Maroon
+    # (0, 128, 0),  # Green
 ]
 
 # Initialize Pygame window

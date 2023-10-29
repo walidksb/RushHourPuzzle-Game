@@ -110,20 +110,20 @@ class Search:
                     print("Goal reached")
                     return child, step,heur
                                 
-                # Check if the child is not in the OPEN queue and the CLOSED list   
-                if((child_board not in [node.state.board for node in closed]) and 
-                    (child_board not in [node.state.board for _, node in list(open.queue)])):
-                    open.put((child.f,child))
-                else: 
-                    if (child.state.board in [node.state.board for _, node in list(open.queue)]) and child.f >= current.f:
-                        child = current
-                    # else:
-                    #     if (child.state.board in [node.state.board for node in closed]) and child.f < current.f:
-                    #         closed.remove(child)
-                    #         open.put((child.f,child))
-            # Sort the OPEN queue
-            # Search.sortopen(open)
-            
+                if (child_board not in [node.state.board for node in closed]) and (child_board not in [node[1].state.board for node in list(open.queue)]):
+                    open.put((child.f, child))
+                else:
+                    if child_board in [node[1].state.board for node in list(open.queue)]:
+                        index = [node[1].state.board for node in list(open.queue)].index(child_board)
+                        if child.f < open.queue[index][0]:
+                            open.queue.pop(index)  # Remove the node from the queue
+                            open.put((child.f, child))  # Put the updated node into the queue
+                    else:
+                        if child_board in [node.state.board for node in closed]:
+                            index = [node.state.board for node in closed].index(child_board)
+                            if child.f < closed[index].f:
+                                closed.pop(index)  # Remove the node from the CLOSED list
+                                open.put((child.f, child))  # Put the updated node into the OPEN queue
         return None            
                         
               

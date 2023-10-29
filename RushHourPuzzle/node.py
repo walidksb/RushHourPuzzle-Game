@@ -34,43 +34,74 @@ class Node:
                     return self.heuristic1()+len(unique_vehicles)-2
                 return self.heuristic1()+len(unique_vehicles)-1
     
-    
-    def heuristic3(self):
-        h1 = self.heuristic1()
-        h2 = self.heuristic2()
-        # # Sum both heuristics
-        return h1 +  h2 
-
-
-
-
-
 
     # def heuristic3(self):
-    #     blocking_vehicles = set()  # Initialize a set to store blocking vehicles
+    #     h1 = self.heuristic1()
+    #     h2 = self.heuristic2()
+    #     # # Sum both heuristics
+    #     return h1 +  h2
+    def blocking_vehicles(self):
+        unique_vehicles = set()
+        for vehicle in self.state.vehicles:
+            if vehicle["id"] == 'X':
+                unique_vehicles = set(self.state.board[vehicle["y"]][vehicle["x"]:])
+        return unique_vehicles
 
-    #     for vehicle in self.state.vehicles:
-    #         if vehicle["id"] == 'X':
-    #             for other_vehicle in self.state.vehicles:
-    #                 if vehicle["id"] != other_vehicle["id"] and vehicle["x"] == other_vehicle["x"]:
-    #                     if vehicle["y"] < other_vehicle["y"]:
-    #                         blocking_vehicles.add(other_vehicle["id"])
-    #                     else:
-    #                         blocking_vehicles.add(other_vehicle["id"])
-
-    #     for vehicle in self.state.vehicles:
-    #         if vehicle["id"] == 'X':
-    #             for other_vehicle in self.state.vehicles:
-    #                 if vehicle["id"] != other_vehicle["id"] and vehicle["y"] == other_vehicle["y"]:
-    #                     if vehicle["x"] < other_vehicle["x"]:
-    #                         blocking_vehicles.add(other_vehicle["id"])
-    #                     else:
-    #                         blocking_vehicles.add(other_vehicle["id"])
-
-    #     return len(blocking_vehicles)+self.heuristic1()  # Return the count of distinct blocking vehicles
-
-
-
+    # def heuristic3(self):
+    #     blocking_vehicles_from_up = 0
+    #     blocking_vehicles_from_down = 0
+    #     unique_vehicles = self.blocking_vehicles()
+        
+    #     for vehicle_id in unique_vehicles:
+    #         if vehicle_id != ' ' and vehicle_id != 'X':
+    #             for vehicle in self.state.vehicles:
+    #                 if vehicle["id"] == vehicle_id:
+    #                     v1, v, h1, h = False, False, False, False
+    #                     y =vehicle["y"] + int(vehicle["length"])
+    #                     id2 =self.state.board[y][vehicle["x"]]
+    #                     for vehicle in self.state.vehicles:
+    #                         if vehicle["id"] == id2:
+    #                             if vehicle["orientation"] == 'V':
+    #                                 v = True
+    #                             if vehicle["orientation"] == 'H':
+    #                                 h = True
+    #                     if self.state.board[y][vehicle["x"]] != ' ' and v == True:
+    #                         blocking_vehicles_from_down += 1
+    #                     if self.state.board[y][vehicle["x"]] != ' ' and h == True:
+    #                         blocking_vehicles_from_down += 1
+    #                     y1 = vehicle["y"] - 1
+    #                     id1 = self.state.board[y1][vehicle["x"]]
+    #                     for vehicle in self.state.vehicles:
+    #                         if vehicle["id"] == id1:
+    #                             if vehicle["orientation"] == 'V':
+    #                                 v1 = True
+    #                             if vehicle["orientation"] == 'H':
+    #                                 h1 = True
+    #                     if self.state.board[y1][vehicle["x"]] != ' ' and v1 == True:
+    #                         blocking_vehicles_from_up += 1
+    #                     if self.state.board[y1][vehicle["x"]] != ' ' and h1 == True:
+    #                         blocking_vehicles_from_up += 1
+    #     up_down = blocking_vehicles_from_up + blocking_vehicles_from_down                    
+    #     return self.heuristic2() + up_down
+    
+    def heuristic3(self):
+        blocking_vehicles_from_up = 0
+        blocking_vehicles_from_down = 0
+        unique_vehicles = self.blocking_vehicles()
+        
+        for vehicle_id in unique_vehicles:
+            if vehicle_id != ' ' and vehicle_id != 'X':
+                for vehicle in self.state.vehicles:
+                    if vehicle["id"] == vehicle_id:
+                        y =vehicle["y"] + int(vehicle["length"])
+                        if self.state.board[y][vehicle["x"]] != ' ':
+                            blocking_vehicles_from_down += 1
+                        y1 = vehicle["y"] - 1
+                        if self.state.board[y1][vehicle["x"]] != ' ':
+                            blocking_vehicles_from_up += 1
+        up_down = blocking_vehicles_from_up + blocking_vehicles_from_down                    
+        return self.heuristic2() + up_down
+    
     def getPath(self):
         states = []
         node = self
