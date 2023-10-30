@@ -117,8 +117,7 @@ class Node:
             actions.append(node.action)
             node = node.parent
         return actions[::-1]
-
-            
+       
 
 
 
